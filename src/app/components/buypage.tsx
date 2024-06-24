@@ -10,6 +10,7 @@ type pubRes = [string, string];
 export default function Buypage() {
     const [bidOrders, setBidOrders] = useState(new Map);
     const [askOrders, setAskOrders] = useState(new Map);
+    const [doUpdate, setUpdate] = useState(false);
 
     useEffect(() => {
         const centrifuge = new Centrifuge('wss://api.testnet.rabbitx.io/ws', {'token':"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwIiwiZXhwIjo1MjYyNjUyMDEwfQ.x_245iYDEvTTbraw1gt4jmFRFfgMJb-GJ-hsU9HuDik", 'name': 'js'});
@@ -32,6 +33,7 @@ export default function Buypage() {
             });
             setBidOrders(bidOrders);
             setAskOrders(askOrders);
+            setUpdate(!doUpdate);
         });
 
         // Trigger subscribe process.
