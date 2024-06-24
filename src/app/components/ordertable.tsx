@@ -40,8 +40,12 @@ export default function  OrderTable(props: TableProps) {
 
     quickSort(props.orders, 0, props.orders.length - 1);
 
-    const formattedOrders = props.orders.map(order => {
-        sum += (props.reverseSum ? -1 : 1) * order.size;
+    const formattedOrders = props.orders.map((order, index) => {
+        if (props.reverseSum) {
+            if (index > 0) sum += (props.reverseSum ? -1 : 1) * props.orders[index - 1].size;
+        } else {
+            sum += order.size;
+        }
         return OrderEntry({
             colorOn: props.colorOn,
             colorOff: props.colorOff,
@@ -53,9 +57,13 @@ export default function  OrderTable(props: TableProps) {
         })
     });
 
-    return <table>
+    const tableStyle = {
+        border: '1px solid'
+    }
+
+    return <table style={tableStyle}>
         <tbody>
-        <tr>
+        <tr style={tableStyle}>
             <th>Price</th>
             <th>Amount</th>
             <th>Total</th>

@@ -26,6 +26,14 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+table, th, td {
+  border: 1px solid black;
+}
+
+table {
+  width: 100%;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
