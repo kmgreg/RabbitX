@@ -60,24 +60,24 @@ export default function Buypage() {
     const bidOrderData : Array<OrderData> = [];
     bidOrders.forEach((val, key, map) => {
         bidOrderData.push({
-            size: val,
-            price: key
+            size: Number.parseFloat(val),
+            price: Number.parseFloat(key)
         })
     })
 
     const askOrderData : Array<OrderData> = [];
     askOrders.forEach((val, key, map) => {
         askOrderData.push({
-            size: val,
-            price: key
+            size: Number.parseFloat(val),
+            price: Number.parseFloat(key)
         })
     })
 
 
     return (
         <main className="flex min-h-screen flex-col items-center justify-between p-24">
-        <OrderTable colorOff='black' colorOn='red' orders={bidOrderData} reverseSum={false}></OrderTable>
-        <OrderTable colorOff='black' colorOn='green' orders={askOrderData} reverseSum={true}></OrderTable>
+        <OrderTable colorOff='black' colorOn='red' colorText='black' orders={bidOrderData} reverseSum={false}></OrderTable>
+        <OrderTable colorOff='black' colorOn='green' colorText='black' orders={askOrderData} reverseSum={true}></OrderTable>
         </main>
     )
   }

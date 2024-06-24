@@ -1,11 +1,12 @@
 export interface OrderData {
-    price: string,
-    size: string
+    price: number,
+    size: number
 }
 
 export type TableProps = {
     colorOn: string,
     colorOff: string,
+    colorText: string,
     orders: Array<OrderData>,
     reverseSum: boolean
 }
@@ -13,7 +14,8 @@ export type TableProps = {
 export type entryProperties = {
     colorOn: string,
     colorOff: string,
-    price: string,
+    colorText: string,
+    price: number,
     amount: number,
     totalAmount: number,
     sumUpTo: number
