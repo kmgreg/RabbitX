@@ -13,6 +13,7 @@ export default function Buypage() {
     const [doUpdate, setUpdate] = useState(false);
     const [sequence, setSequence] = useState(0);
 
+    // set up sockets connection
     useEffect(() => {
         const centrifuge = new Centrifuge('wss://api.testnet.rabbitx.io/ws', {'token':"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwIiwiZXhwIjo1MjYyNjUyMDEwfQ.x_245iYDEvTTbraw1gt4jmFRFfgMJb-GJ-hsU9HuDik", 'name': 'js'});
         const sub = centrifuge.newSubscription('orderbook:SOL-USD');
@@ -33,6 +34,7 @@ export default function Buypage() {
                     askOrders.set(ask[0], ask[1]);
                 }
             });
+            // As per the docs resub if sequence is wrong
             if (ctx.data.sequence != sequence + 1) {
                 sub.unsubscribe();
                 sub.subscribe();
@@ -43,17 +45,14 @@ export default function Buypage() {
             setUpdate(!doUpdate);
         });
 
-        // Trigger subscribe process.
         sub.subscribe();
 
-        // Trigger actual connection establishement.
         centrifuge.connect();
 
         return () => {
             sub.unsubscribe();
             sub.removeAllListeners();
             centrifuge.disconnect();
-
         }
     })
 
