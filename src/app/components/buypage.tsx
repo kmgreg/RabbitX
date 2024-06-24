@@ -11,12 +11,14 @@ export default function Buypage() {
     const [bidOrders, setBidOrders] = useState(new Map);
     const [askOrders, setAskOrders] = useState(new Map);
     const [doUpdate, setUpdate] = useState(false);
+    const [sequence, setSequence] = useState(0);
 
     useEffect(() => {
         const centrifuge = new Centrifuge('wss://api.testnet.rabbitx.io/ws', {'token':"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwIiwiZXhwIjo1MjYyNjUyMDEwfQ.x_245iYDEvTTbraw1gt4jmFRFfgMJb-GJ-hsU9HuDik", 'name': 'js'});
         const sub = centrifuge.newSubscription('orderbook:SOL-USD');
 
         sub.on('publication', function(ctx) {
+            console.log(ctx.data);
             ctx.data.bids.forEach((bid : pubRes) => {
                 if (bid[1] === '0') {
                     bidOrders.delete(bid[0]);
@@ -31,6 +33,11 @@ export default function Buypage() {
                     askOrders.set(ask[0], ask[1]);
                 }
             });
+            if (ctx.data.sequence != sequence + 1) {
+                sub.unsubscribe();
+                sub.subscribe();
+            }
+            setSequence(ctx.data.sequence);
             setBidOrders(bidOrders);
             setAskOrders(askOrders);
             setUpdate(!doUpdate);
@@ -42,7 +49,12 @@ export default function Buypage() {
         // Trigger actual connection establishement.
         centrifuge.connect();
 
-        return () => {}
+        return () => {
+            sub.unsubscribe();
+            sub.removeAllListeners();
+            centrifuge.disconnect();
+
+        }
     })
 
     const bidOrderData : Array<OrderData> = [];

@@ -3,6 +3,10 @@ import OrderEntry from "./orderentry";
 import { OrderData, TableProps} from "../../../types";
 
 export default function  OrderTable(props: TableProps) {
+    let total = 0;
+    props.orders.forEach(orderData => {
+        total += Number.parseFloat(orderData.size);
+    })
     let sum = 0;
     const formattedOrders = props.orders.map(order => {
         sum += Number.parseFloat(order.size);
@@ -10,7 +14,7 @@ export default function  OrderTable(props: TableProps) {
             colorOn: props.colorOn,
             colorOff: props.colorOff,
             sumUpTo: sum,
-            totalAmount: 100,
+            totalAmount: total,
             price: order.price,
             amount: Number.parseFloat(order.size)
         })

@@ -5,7 +5,7 @@ import { entryProperties } from "../../../types";
 export default function OrderEntry (props: entryProperties) {
 
     const percentageColors = {
-        background: `linear-gradient(to right, ${props.colorOn} ${props.sumUpTo / props.totalAmount}%, ${props.colorOff} ${(props.sumUpTo - props.totalAmount) / props.totalAmount}%)`
+        background: `linear-gradient(to right, ${props.colorOn} ${100 * (props.sumUpTo / props.totalAmount)}%, ${props.colorOff} ${100 * ((props.sumUpTo - props.totalAmount) / props.totalAmount)}%)`
     }
 
     return (
