@@ -76,8 +76,8 @@ export default function Buypage() {
 
     return (
         <main className="flex min-h-screen flex-col items-center justify-between p-24">
-        <OrderTable colorOff='black' colorOn='red' colorText='black' orders={bidOrderData} reverseSum={false}></OrderTable>
-        <OrderTable colorOff='black' colorOn='green' colorText='black' orders={askOrderData} reverseSum={true}></OrderTable>
+        <OrderTable colorOff='black' colorOn='red' colorText='black' orders={bidOrderData} reverseSum={true}></OrderTable>
+        <OrderTable colorOff='black' colorOn='green' colorText='black' orders={askOrderData} reverseSum={false}></OrderTable>
         </main>
     )
   }

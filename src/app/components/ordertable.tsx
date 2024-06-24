@@ -7,7 +7,8 @@ export default function  OrderTable(props: TableProps) {
     props.orders.forEach(orderData => {
         total += orderData.size;
     })
-    let sum = 0;
+
+    let sum = props.reverseSum ? total : 0;
 
     // quick sort the prices
     function partition (arr : Array<OrderData>, low: number, high: number) {
@@ -40,7 +41,7 @@ export default function  OrderTable(props: TableProps) {
     quickSort(props.orders, 0, props.orders.length - 1);
 
     const formattedOrders = props.orders.map(order => {
-        sum += order.size;
+        sum += (props.reverseSum ? -1 : 1) * order.size;
         return OrderEntry({
             colorOn: props.colorOn,
             colorOff: props.colorOff,
